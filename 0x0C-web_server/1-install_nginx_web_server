@@ -1,15 +1,8 @@
 #!/usr/bin/env bash
-# Install and configure Nginx web server
+# This script installs nginx on ubuntu server
 
-# Update package list and install Nginx
-sudo apt-get update -y
-sudo apt-get install nginx -y
-
-# Configure Nginx to listen on port 80
-sudo sed -i 's/80 default_server/80 default_server\n        location \/ {\n            add_header Cache-Control "no-cache, no-store, must-revalidate";\n            echo "Hello World!";\n        }/g' /etc/nginx/sites-available/default
-
-# Restart Nginx (without using systemctl)
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt-get install -y nginx
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+sudo ufw allow 'Nginx HTTP'
 sudo service nginx restart
-
-# Verify Nginx configuration by querying at its root with curl
-curl localhost
